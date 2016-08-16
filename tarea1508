@@ -1,1 +1,145 @@
+package programa01;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/**
+ *
+ * @author seba
+ */
+public class Programa01 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+        // TODO code application logic here
+        char n = 0;
+        char m = 0;
+        char l = 0;
+        int N = 1, cont1 = 0, cont2 = 0, cont3 = 0, totalAprueba = 0;
+        System.out.println("ENCUESTA NACIONAL GESTION GOBIERNO.");
+        char[][] En = new char[2][N];
+        do {
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < N; j++) {
+                    System.out.println("Sexo de persona que responde masculino('m') o femenino('f')");
+                    do {
+                        n = Leer();
+                        if (n != 'm' && n != 'f') {
+                            System.out.println("Opcion no valida.");
+                        } else {
+                            En[0][j] = n;
+                            if (n == 'm') {
+                                System.out.println("¿Aprueba gestion del gobierno?");
+                                System.out.println("'s' : si aprueba la gestión del gobierno.");
+                                System.out.println("'n' : no aprueba la gestión del gobierno.");
+                                System.out.println("'x' : no sabe o no responde.");
+                                do {
+                                    l = Leer();
+                                    if (l != 's' && l != 'n' && l != 'x') {
+                                        System.out.println("Opcion no valida.");
+                                    } else {
+                                        En[1][j] = l;
+                                        if (l == 's') {
+                                            cont1++;
+                                            cont3++;
+                                        }
+                                    }
+                                } while (l != 's' && l != 'n' && l != 'x');
+                            } else if (n == 'f') {
+                                System.out.println("¿Aprueba gestion del gobierno?");
+                                System.out.println("'s' : si aprueba la gestión del gobierno.");
+                                System.out.println("'n' : no aprueba la gestión del gobierno.");
+                                System.out.println("'x' : no sabe o no responde.");
+                                do {
+                                    l = Leer();
+                                    if (l != 's' && l != 'n' && l != 'x') {
+                                        System.out.println("Opcion no valida.");
+                                    } else {
+                                        En[1][j] = l;
+                                        if (l == 'n') {
+                                            cont2++;
+                                        } else {
+                                            cont3++;
+                                        }
+                                    }
+                                } while (l != 's' && l != 'n' && l != 'x');
+                            }
+                        }
+                    } while (n != 'm' && n != 'f');
+                    System.out.println("¿Finalizar encuesta?");
+                    m = Leer();
+                    if (m == 'n') {
+                        N++;
+                    } else {
+                        System.out.println("ADIOS.");
+                    }
+                }
+            }
+        } while (m != 's');
+        totalAprueba = (cont3 / N) * 100;
+        System.out.println("Cantidad de hombres que aprueban gestion: " + cont1);
+        System.out.println("Cantidad de mujeres que desaprueban gestion: " + cont2);
+        System.out.println("Porcentaje de encuestados que aprueban gestion: " + totalAprueba);
+        System.out.println("Cantidad de personas que participaron: " + N);
+    }
+
+    public static char Leer() throws IOException {
+        char n;
+        n = (char) System.in.read();
+        return n;
+    }
+
+}
+------------------------------------------------------------------------------------------------------------------
+package programa02;
+
+import java.util.Random;
+
+/**
+ *
+ * @author seba
+ */
+public class Programa02 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int total = 0, j = 0, cont = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0;
+        int[][] M = new int[3][3];
+        Random azar = new Random();
+        for (int i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                M[i][j] = azar.nextInt(9) + 1;
+                System.out.print("|" + M[i][j] + "|");
+            }
+            System.out.println("");
+        }
+        for (int i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                total += M[i][j];
+            }
+            if (total != 15) {
+                break;
+            } else {
+                cont++;
+            }
+            total = 0;
+            p1 += M[i][2];
+            p2 += M[i][1];
+            p3 += M[i][0];
+            p4 += M[i][i];
+            p5 += M[i][j - 1];
+        }
+        if (cont == 3 && (p1 + p2 + p3 + p4 + p5) % 15 == 0) {
+            System.out.println("Cuadrado generado es ''cuadrado magico''. ");
+        } else {
+            System.out.println("Cuadrado generado no es ''cuadrado magico''. ");
+        }
+    }
+
+}
